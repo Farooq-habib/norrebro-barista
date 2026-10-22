@@ -1,4 +1,8 @@
-<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!doctype html>
+<html lang="da">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Nørrebro Barista</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -118,6 +122,7 @@ nav.links a:hover::after{transform:scaleX(1);transform-origin:left}
 .hs-pin h2.sans{font-family:var(--body);font-weight:600;font-size:clamp(40px,5.6vw,80px);line-height:1.1;letter-spacing:-.035em;padding-top:.06em}
 .hs-pin h2.sans em{font-style:normal;color:var(--caramel)}
 .hs-pin > .wrap{width:100%}
+.hs-pin{z-index:2}
 .hs-track{display:flex;gap:24px;will-change:transform;padding-left:max(20px,env(safe-area-inset-left,0px),calc((100vw - 1240px)/2 + 20px));padding-right:max(20px,env(safe-area-inset-right,0px))}
 .lesson{flex:none;width:min(540px,84vw);min-height:min(460px,52svh);border-radius:28px;background:var(--surface);border:1px solid var(--line);padding:clamp(26px,3vw,40px);display:flex;flex-direction:column;gap:18px;position:relative;overflow:hidden}
 .lesson .num{position:absolute;right:24px;top:10px;font-family:var(--display);font-style:italic;font-size:150px;line-height:1;color:transparent;-webkit-text-stroke:1px rgba(239,227,208,.16);pointer-events:none}
@@ -216,7 +221,8 @@ nav.links a:hover::after{transform:scaleX(1);transform-origin:left}
 .step + .step{padding-left:28px}
 .step:last-child{border-right:0}
 @media (max-width:860px){.step,.step + .step{border-right:0;border-bottom:1px solid var(--line);padding-inline:0}}
-.step .n{font-family:var(--display);font-style:italic;font-size:56px;line-height:1;color:var(--caramel)}
+.step .n{display:block;width:58px;height:58px;color:var(--caramel)}
+.step .n svg{width:100%;height:100%;display:block}
 .step h3{font-size:30px;line-height:1.1}
 .step p{margin:0;color:var(--muted)}
 .where{margin-top:48px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px}
@@ -224,6 +230,15 @@ nav.links a:hover::after{transform:scaleX(1);transform-origin:left}
 .where div{border-radius:24px;border:1px solid var(--line);padding:28px;display:flex;flex-direction:column;gap:6px}
 .where b{font-family:var(--display);font-weight:400;font-size:30px;line-height:1.1}
 .where span{color:var(--muted)}
+
+.contact{display:flex;flex-direction:column;gap:12px;margin-top:6px;padding:22px 24px;border:1px solid var(--line);border-radius:20px;max-width:640px}
+.contact p{margin:0;color:var(--cream);font-size:18px;line-height:1.5}
+.mailrow{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.mail{font-family:var(--display);font-size:clamp(26px,3vw,34px);line-height:1.1;color:var(--caramel);text-decoration:none;border-bottom:1px solid currentColor;user-select:all;-webkit-user-select:all;overflow-wrap:anywhere}
+.mail:hover{color:var(--cream)}
+.copy{border:1px solid var(--line);background:transparent;color:var(--cream);border-radius:999px;padding:8px 16px;font-size:14px;cursor:pointer;transition:border-color .3s,background .3s,color .3s}
+.copy:hover{border-color:var(--cream)}
+.copy.done{background:var(--cream);color:var(--black);border-color:var(--cream)}
 
 /* faq */
 .faq{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.5fr);gap:clamp(24px,5vw,72px)}
@@ -257,6 +272,15 @@ footer{background:var(--black);padding-block:72px 40px;overflow:hidden;border-to
 .foot{display:flex;justify-content:space-between;gap:16px 32px;flex-wrap:wrap;margin-top:40px;padding-top:24px;border-top:1px solid var(--line);font-size:14px;color:var(--muted)}
 .foot div{display:flex;gap:6px 28px;flex-wrap:wrap}
 
+/* scroll position tag, follows the scrollbar */
+.stag{position:fixed;top:0;right:max(14px,env(safe-area-inset-right,0px));z-index:45;pointer-events:none;display:flex;align-items:center;gap:7px;will-change:transform;opacity:0;transition:opacity .5s var(--ease)}
+.stag.show{opacity:1}
+.stag span{display:block;padding:3px 9px;border-radius:999px;background:color-mix(in srgb,var(--black) 82%,transparent);border:1px solid var(--line);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);font-size:10px;font-weight:600;letter-spacing:.06em;color:var(--cream);white-space:nowrap;transition:opacity .25s,transform .35s var(--ease)}
+.stag span.swap{opacity:0;transform:translateY(6px)}
+.stag i{width:12px;height:1px;background:var(--caramel)}
+.stag b{width:4px;height:4px;border-radius:50%;background:var(--caramel);flex:none}
+@media (max-width:600px){.stag span{font-size:9.5px;padding:3px 8px}.stag i{width:6px}}
+
 /* cursor */
 .cursor{position:fixed;left:0;top:0;width:10px;height:10px;margin:-5px 0 0 -5px;border-radius:50%;background:var(--cream);pointer-events:none;z-index:70;mix-blend-mode:difference;transition:width .4s var(--ease),height .4s var(--ease),margin .4s var(--ease),opacity .3s;opacity:0}
 .cursor.big{width:54px;height:54px;margin:-27px 0 0 -27px}
@@ -270,6 +294,9 @@ footer{background:var(--black);padding-block:72px 40px;overflow:hidden;border-to
   .cursor{display:none}
 }
 </style>
+</head>
+<body>
+
 
 <header class="top" id="hdr">
   <div class="wrap">
@@ -377,11 +404,18 @@ footer{background:var(--black);padding-block:72px 40px;overflow:hidden;border-to
         <span class="label">Tilmelding</span>
         <h2>Tilmeld dig <em>lektion</em> for lektion</h2>
         <p class="lede">Der er ingen tilmeldingsformular. Du tilmelder dig hver lektion på Messenger eller Facebook, så holdet altid ved, hvem der kommer.</p>
+        <div class="contact">
+          <p>Kom forbi RCYN og snak med Farooq, eller tag kontakt til Sakorn for tilmelding via mail:</p>
+          <div class="mailrow">
+            <a class="mail" href="mailto:sakorn@kantara.dk">sakorn@kantara.dk</a>
+            <button class="copy" type="button" id="copyMail">Kopiér mail</button>
+          </div>
+        </div>
       </div>
       <div class="steps3 rv">
-        <div class="step"><span class="n">i.</span><h3>Bliv en del af gruppen</h3><p>Kurset har en gruppe på Facebook og på Messenger. Det er der, lektionerne bliver meldt ud.</p></div>
-        <div class="step"><span class="n">ii.</span><h3>Tilmeld dig hver lektion</h3><p>Skriv til Farooq på Messenger, eller tilmeld dig i Facebook-gruppen, før hver lektion du vil være med til.</p></div>
-        <div class="step"><span class="n">iii.</span><h3>Kan du ikke komme? Så skriv!</h3><p>Hvis du ikke kan deltage, så husk at skrive. Det hjælper med at planlægge kaffe, mælk og pladser ved maskinen.</p></div>
+        <div class="step"><span class="n" role="img" aria-label="Trin 1"><svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M23 5c-3 4 3 6 0 10M32 3c-3 4 3 6 0 10M41 5c-3 4 3 6 0 10"/><path d="M12 23h36v13c0 9-7 16-16 16h-4c-9 0-16-7-16-16z"/><path d="M48 27h4a6.5 6.5 0 0 1 0 13h-5"/><path d="M13 31h34" stroke-width="6"/><path d="M5 57h50"/></svg></span><h3>Bliv en del af gruppen</h3><p>Kurset har en gruppe på Facebook og på Messenger. Det er der, lektionerne bliver meldt ud.</p></div>
+        <div class="step"><span class="n" role="img" aria-label="Trin 2"><svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M23 5c-3 4 3 6 0 10M32 3c-3 4 3 6 0 10M41 5c-3 4 3 6 0 10"/><path d="M12 23h36v13c0 9-7 16-16 16h-4c-9 0-16-7-16-16z"/><path d="M48 27h4a6.5 6.5 0 0 1 0 13h-5"/><path d="M13 31h34" stroke-width="6"/><path d="M5 57h50"/></svg></span><h3>Tilmeld dig hver lektion</h3><p>Skriv til Farooq på Messenger, eller tilmeld dig i Facebook-gruppen, før hver lektion du vil være med til.</p></div>
+        <div class="step"><span class="n" role="img" aria-label="Trin 3"><svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M23 5c-3 4 3 6 0 10M32 3c-3 4 3 6 0 10M41 5c-3 4 3 6 0 10"/><path d="M12 23h36v13c0 9-7 16-16 16h-4c-9 0-16-7-16-16z"/><path d="M48 27h4a6.5 6.5 0 0 1 0 13h-5"/><path d="M13 31h34" stroke-width="6"/><path d="M5 57h50"/></svg></span><h3>Kan du ikke komme? Så skriv!</h3><p>Hvis du ikke kan deltage, så husk at skrive. Det hjælper med at planlægge kaffe, mælk og pladser ved maskinen.</p></div>
       </div>
       <div class="where">
         <div class="rv"><span class="label">Hvor</span><b>RCYN, Ressourcecenter Ydre Nørrebro</b><span>En del af Kantara. Lektionerne foregår ved RCYN’s kaffebord og på kaffevognen.</span></div>
@@ -439,11 +473,12 @@ footer{background:var(--black);padding-block:72px 40px;overflow:hidden;border-to
   <div class="wrap">
     <div class="foot">
       <div><span>Af RCYN, i RCYN</span><span>Ressourcecenter Ydre Nørrebro · Kantara</span></div>
-      <div><span>Projektansvarlig: Farooq</span><span>Tilmelding via Messenger eller Facebook</span></div>
+      <div><span>Projektansvarlig: Farooq</span><span>Tilmelding: sakorn@kantara.dk</span></div>
     </div>
   </div>
 </footer>
 <div class="cursor" id="cursor" aria-hidden="true"></div>
+<div class="stag" id="stag" aria-hidden="true"><b></b><span id="stagT">Det lærer du</span><i></i></div>
 
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
 <script>
@@ -619,6 +654,15 @@ $('#kit').addEventListener('click', e => {
   setTimeout(() => lenis?.resize?.(), 750);
 });
 
+/* ---------- copy email ---------- */
+const copyBtn = $('#copyMail');
+copyBtn.addEventListener('click', () => {
+  const mail = 'sakorn@kantara.dk';
+  const ok = () => { copyBtn.textContent = 'Kopieret'; copyBtn.classList.add('done'); setTimeout(() => { copyBtn.textContent = 'Kopiér mail'; copyBtn.classList.remove('done'); }, 2000); };
+  const fallback = () => { const r = document.createRange(); r.selectNodeContents($('.mail')); const sel = getSelection(); sel.removeAllRanges(); sel.addRange(r); copyBtn.textContent = 'Markeret, tryk Ctrl+C'; };
+  try { navigator.clipboard.writeText(mail).then(ok, fallback); } catch(e) { fallback(); }
+});
+
 /* ---------- footer marquee ---------- */
 const marq = $('#marq');
 marq.innerHTML = '<span>Nørrebro <em>Barista</em> ✦ RCYN ✦</span>'.repeat(4);
@@ -635,6 +679,27 @@ function updateHeader(y){
   const inPin = hsDist && hsr.top <= 0 && hsr.bottom >= innerHeight;
   if (inPin || down) hdr.classList.add('hide'); else if (up || y < 400) hdr.classList.remove('hide');
   lastHdrY = y;
+}
+
+/* ---------- scroll position tag ---------- */
+const STAGS = [['.manifesto','Intro'],['#maal','Det lærer du'],['#lektioner','Lektion for lektion'],['#drikke','Elleve drikke'],['#udstyr','Kend dit udstyr'],['#tilmelding','Tilmeld dig'],['#faq','Spørgsmål'],['#hjerte','Fra kande til hjerte']].map(([q, t]) => [document.querySelector(q), t]);
+const stag = $('#stag'), stagT = $('#stagT');
+let stagY = 0, stagCur = '', stagTimer = null;
+function updateStag(){
+  const maxY = Math.max(1, document.documentElement.scrollHeight - innerHeight);
+  const p = Math.min(1, Math.max(0, scrollY / maxY));
+  const h = stag.offsetHeight || 28;
+  const target = Math.min(innerHeight - h - 12, Math.max(84, p*innerHeight - h/2));
+  stagY = reduce ? target : stagY + (target - stagY)*.18;
+  stag.style.transform = `translate3d(0,${stagY.toFixed(1)}px,0)`;
+  let cur = '';
+  for (const [el, t] of STAGS) if (el && el.getBoundingClientRect().top <= innerHeight*.45) cur = t;
+  stag.classList.toggle('show', !!cur);
+  if (cur && cur !== stagCur){
+    stagCur = cur;
+    if (reduce || !stagT.textContent){ stagT.textContent = cur; }
+    else { clearTimeout(stagTimer); stagT.classList.add('swap'); stagTimer = setTimeout(() => { stagT.textContent = cur; stagT.classList.remove('swap'); }, 200); }
+  }
 }
 
 /* ---------- cursor ---------- */
@@ -697,9 +762,12 @@ const smooth = t => { t = Math.min(1, Math.max(0, t)); return t*t*(3 - 2*t); };
 const HOLE_SEL = 'main h1, main h2, main h3, main p, main li, main .label, main .btn, main summary, main .fact span, main .dchip, main .kit-btn small, main .legend span, main .dmeta span, main .scroll-cue, main .step .n, main .where span, main .where b, main .da, main .tip';
 const LIVE_SEL = '.hs-pin > .wrap .label, .hs-pin > .wrap h2, .hs-count';
 function rectsFor(el){
-  if (el.matches('.btn, .dchip')) return [el.getBoundingClientRect()];
-  const r = document.createRange(); r.selectNodeContents(el);
-  return [...r.getClientRects()];
+  if (el.matches('.btn, .dchip, .step .n')) return [el.getBoundingClientRect()];
+  const out = [], r = document.createRange();
+  const tw = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+  let n;
+  while ((n = tw.nextNode())){ if (!n.nodeValue.trim()) continue; r.selectNodeContents(n); out.push(...r.getClientRects()); }
+  return out;
 }
 function holeRect(r, sy, pad){
   return `<rect x="${(r.left - pad).toFixed(1)}" y="${(r.top + sy - pad).toFixed(1)}" width="${(r.width + pad*2).toFixed(1)}" height="${(r.height + pad*2).toFixed(1)}" rx="${pad}" fill="#000" fill-opacity=".55"/>` +
@@ -831,7 +899,7 @@ function frame(t){
   const y = scrollY;
   vel = vel*.9 + Math.abs(y - lastY)*.1; lastY = y;
   drawSteam(t);
-  updateMani(); updateHS(); updateHeader(y); updateMilk(fdt);
+  updateMani(); updateHS(); updateHeader(y); updateMilk(fdt); updateStag();
   if (!reduce){
     mqX -= .6 + vel*.35;
     const half = marq.scrollWidth/2;
@@ -849,4 +917,5 @@ document.fonts?.ready?.then(() => { sizeHS(); lenis?.resize?.(); rebuild(); });
 })();
 </script>
 
-</body></html>
+</body>
+</html>
