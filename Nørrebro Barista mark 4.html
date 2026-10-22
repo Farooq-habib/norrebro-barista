@@ -1,0 +1,852 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Nørrebro Barista</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Hanken+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* Layout: one continuous dark scroll. Full-screen hero over drifting steam; a manifesto that fills in as you scroll; big goal rows; pinned horizontal lesson track; drink guide; equipment accordion; sign-up; FAQ; footer marquee. Single deliberate dark theme: black with roasted brown and crema. */
+:root{
+  --black:#0b0907;
+  --bg:#110d0a;
+  --surface:#1b1410;
+  --surface-2:#251b14;
+  --cream:#efe3d0;
+  --muted:#a38d76;
+  --dim:#4a3a2d;
+  --line:rgba(239,227,208,.12);
+  --caramel:#c08552;
+  --brown:#6b4329;
+  --display:"Instrument Serif",Georgia,"Times New Roman",serif;
+  --body:"Hanken Grotesk",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --ease:cubic-bezier(.16,1,.3,1);
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{background:var(--black)}
+html.lenis,html.lenis body{height:auto}
+.lenis.lenis-smooth{scroll-behavior:auto!important}
+body{background:var(--bg);color:var(--cream);font-family:var(--body);font-size:17px;line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--black)}
+body::after{content:"";position:fixed;inset:-50%;z-index:50;pointer-events:none;opacity:.06;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+a{color:inherit}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--caramel);outline-offset:3px}
+::selection{background:var(--caramel);color:var(--black)}
+.wrap{max-width:1240px;margin:0 auto;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
+.label{font-size:12px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--caramel)}
+h1,h2,h3{font-family:var(--display);font-weight:400;margin:0;letter-spacing:-.015em;text-wrap:balance}
+h2{font-size:clamp(44px,7vw,96px);line-height:.95}
+h2 em,h1 em{font-style:italic;color:var(--caramel)}
+.lede{max-width:56ch;color:var(--muted);margin:0}
+section{padding-block:clamp(88px,13vw,180px);position:relative}
+.sec-head{display:flex;flex-direction:column;gap:18px;margin-bottom:clamp(40px,6vw,72px)}
+
+/* header */
+header.top{position:fixed;left:0;right:0;top:env(safe-area-inset-top,0px);z-index:40;transition:transform .5s var(--ease),background .4s}
+header.top.solid{background:color-mix(in srgb,var(--black) 78%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+header.top.hide{transform:translateY(-110%)}
+header.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;height:72px}
+.brand{display:flex;align-items:baseline;gap:10px;text-decoration:none;white-space:nowrap}
+.brand b{font-family:var(--display);font-weight:400;font-size:26px;line-height:1}
+.brand small{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+@media (max-width:420px){.brand small{display:none}}
+nav.links{display:flex;gap:30px;font-size:14px;letter-spacing:.04em}
+nav.links a{text-decoration:none;color:var(--muted);transition:color .3s;position:relative}
+nav.links a::after{content:"";position:absolute;left:0;right:0;bottom:-4px;height:1px;background:var(--caramel);transform:scaleX(0);transform-origin:right;transition:transform .5s var(--ease)}
+nav.links a:hover{color:var(--cream)}
+nav.links a:hover::after{transform:scaleX(1);transform-origin:left}
+@media (max-width:900px){nav.links{display:none}}
+.btn{display:inline-flex;align-items:center;gap:12px;border:0;border-radius:999px;padding:14px 26px;font-weight:600;font-size:15px;text-decoration:none;cursor:pointer;white-space:nowrap;position:relative;overflow:hidden;isolation:isolate;transition:color .4s var(--ease)}
+.btn::before{content:"";position:absolute;inset:0;z-index:-1;border-radius:inherit;transform:translateY(101%);transition:transform .5s var(--ease)}
+.btn:hover::before{transform:none}
+.btn.primary{background:var(--caramel);color:var(--black)}
+.btn.primary::before{background:var(--cream)}
+.btn.ghost{background:transparent;color:var(--cream);box-shadow:inset 0 0 0 1px var(--line)}
+.btn.ghost::before{background:var(--cream)}
+.btn.ghost:hover{color:var(--black)}
+.btn .arr{transition:transform .5s var(--ease)}
+.btn:hover .arr{transform:translateX(4px)}
+
+/* hero */
+.hero{min-height:calc(100svh - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;justify-content:flex-end;padding-block:120px 48px;overflow:hidden;background:var(--black)}
+#steam{position:absolute;inset:0;width:100%;height:100%;filter:blur(30px);opacity:.9}
+.hero::after{content:"";position:absolute;inset:auto 0 0;height:40%;background:linear-gradient(transparent,var(--black));pointer-events:none}
+.hero .wrap{position:relative;z-index:2;width:100%;display:flex;flex-direction:column;gap:clamp(28px,4vw,44px)}
+.hero h1{font-size:clamp(68px,15vw,232px);line-height:.84;letter-spacing:-.035em}
+.hero h1 .ln{display:block;overflow:hidden;padding-bottom:.06em}
+.hero h1 .ln span{display:inline-block;animation:rise 1.4s var(--ease) both}
+.hero h1 .ln:nth-child(2) span{animation-delay:.12s}
+@keyframes rise{from{transform:translateY(105%)}to{transform:none}}
+.hero-row{display:flex;justify-content:space-between;align-items:flex-end;gap:28px;flex-wrap:wrap}
+.hero-row p{margin:0;max-width:40ch;font-size:clamp(17px,1.6vw,20px);color:var(--muted)}
+.hero-row p b{color:var(--cream);font-weight:500}
+.cta-row{display:flex;gap:12px;flex-wrap:wrap}
+.scroll-cue{display:flex;align-items:center;gap:12px;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+.scroll-cue i{width:1px;height:44px;background:var(--line);position:relative;overflow:hidden}
+.scroll-cue i::after{content:"";position:absolute;left:0;top:-40%;width:1px;height:40%;background:var(--caramel);animation:cue 2.2s var(--ease) infinite}
+@keyframes cue{to{top:110%}}
+
+/* manifesto */
+.manifesto p{font-family:var(--display);font-size:clamp(34px,5.2vw,76px);line-height:1.08;letter-spacing:-.015em;margin:0;max-width:20ch}
+.manifesto .w{color:var(--dim);transition:color .35s}
+.manifesto .w.on{color:var(--cream)}
+.manifesto .w.on.em{color:var(--caramel);font-style:italic}
+
+/* facts */
+.facts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:1px solid var(--line)}
+@media (max-width:860px){.facts{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.fact{padding:28px 20px 0 0;display:flex;flex-direction:column;gap:6px;min-width:0}
+.fact b{font-family:var(--display);font-weight:400;font-size:clamp(48px,6vw,84px);line-height:1;letter-spacing:-.02em}
+.fact span{font-size:14px;color:var(--muted)}
+
+/* goals */
+.goals{border-top:1px solid var(--line)}
+.goal{position:relative;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:24px;align-items:baseline;padding:26px 0;border-bottom:1px solid var(--line);isolation:isolate}
+.goal::before{content:"";position:absolute;inset:0 -20px;z-index:-1;background:var(--surface);transform:scaleY(0);transform-origin:bottom;transition:transform .6s var(--ease)}
+.goal:hover::before{transform:none;transform-origin:top}
+.goal h3{font-size:clamp(28px,3.4vw,46px);line-height:1.05;transition:transform .6s var(--ease),color .4s}
+.goal:hover h3{transform:translateX(14px);color:var(--caramel)}
+.goal p{margin:0;color:var(--muted);max-width:44ch}
+@media (max-width:640px){.goal{grid-template-columns:minmax(0,1fr);gap:6px}}
+
+/* lessons: pinned horizontal */
+.hs{position:relative;padding:0;background:var(--black)}
+.hs-pin{position:sticky;top:0;height:100svh;display:flex;flex-direction:column;justify-content:safe center;gap:clamp(20px,3.5vh,40px);overflow:hidden;padding-block:56px 24px}
+.hs-pin h2.sans{font-family:var(--body);font-weight:600;font-size:clamp(40px,5.6vw,80px);line-height:1.1;letter-spacing:-.035em;padding-top:.06em}
+.hs-pin h2.sans em{font-style:normal;color:var(--caramel)}
+.hs-pin > .wrap{width:100%}
+.hs-track{display:flex;gap:24px;will-change:transform;padding-left:max(20px,env(safe-area-inset-left,0px),calc((100vw - 1240px)/2 + 20px));padding-right:max(20px,env(safe-area-inset-right,0px))}
+.lesson{flex:none;width:min(540px,84vw);min-height:min(460px,52svh);border-radius:28px;background:var(--surface);border:1px solid var(--line);padding:clamp(26px,3vw,40px);display:flex;flex-direction:column;gap:18px;position:relative;overflow:hidden}
+.lesson .num{position:absolute;right:24px;top:10px;font-family:var(--display);font-style:italic;font-size:150px;line-height:1;color:transparent;-webkit-text-stroke:1px rgba(239,227,208,.16);pointer-events:none}
+.lesson .tag{font-size:12px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--caramel)}
+.lesson h3{font-size:clamp(36px,4vw,52px);line-height:1;max-width:11ch}
+.lesson ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px;position:relative}
+.lesson li{display:grid;grid-template-columns:14px minmax(0,1fr);gap:12px;align-items:baseline}
+.lesson li::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--caramel);transform:translateY(-2px)}
+.lesson .rep{margin-top:auto;padding-top:18px;border-top:1px solid var(--line);font-size:14px;color:var(--muted)}
+.lesson .rep b{display:block;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--cream);font-weight:600;margin-bottom:4px}
+.lesson .rep a{color:var(--caramel)}
+.lesson.finale{background:var(--caramel);color:var(--black);border-color:transparent}
+.lesson.finale .tag{color:var(--black)}
+.lesson.finale li::before{background:var(--black)}
+.lesson.finale .rep{color:rgba(11,9,7,.7);border-color:rgba(11,9,7,.2)}
+.lesson.finale .rep b{color:var(--black)}
+.lesson.finale .num{-webkit-text-stroke-color:rgba(11,9,7,.2)}
+.hs-foot{display:flex;align-items:center;gap:20px}
+.hs-bar{flex:1;height:1px;background:var(--line);position:relative}
+.hs-bar i{position:absolute;inset:-0.5px 0;background:var(--caramel);transform-origin:0 50%;transform:scaleX(0)}
+.hs-count{font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums;letter-spacing:.08em}
+@media (max-width:760px){
+  .hs{height:auto!important;padding-block:96px}
+  .hs-pin{position:static;height:auto;overflow:visible;padding-top:0}
+  .hs-track{flex-direction:column;transform:none!important;padding-left:max(20px,env(safe-area-inset-left,0px))}
+  .lesson{width:100%;min-height:0}
+  .lesson .num{font-size:110px}
+  .hs-foot{display:none}
+}
+
+/* drinks */
+.guide{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(28px,5vw,72px);align-items:center}
+@media (max-width:880px){.guide{grid-template-columns:minmax(0,1fr)}}
+.drink-list{display:flex;flex-direction:column;gap:22px;min-width:0}
+.dgroup{display:flex;flex-direction:column;gap:12px}
+.dgroup .label{color:var(--muted)}
+.dchips{display:flex;flex-wrap:wrap;gap:8px}
+.dchip{border:1px solid var(--line);background:transparent;border-radius:999px;padding:10px 18px;font-size:15px;cursor:pointer;transition:background .4s var(--ease),color .4s,border-color .4s}
+.dchip:hover{border-color:var(--muted)}
+.dchip[aria-pressed="true"]{background:var(--cream);color:var(--black);border-color:var(--cream)}
+.dcard{position:relative;border-radius:28px;background:radial-gradient(120% 90% at 30% 100%,var(--surface-2),var(--surface));border:1px solid var(--line);padding:clamp(24px,4vw,44px);display:grid;grid-template-columns:auto minmax(0,1fr);gap:clamp(22px,4vw,44px);align-items:end;min-width:0}
+@media (max-width:480px){.dcard{grid-template-columns:minmax(0,1fr)}}
+.glasswrap{height:230px;display:flex;align-items:flex-end;justify-content:center;width:215px;max-width:100%}
+.glass{position:relative;border:2px solid rgba(239,227,208,.75);border-top:0;border-radius:0 0 34px 34px;background:rgba(239,227,208,.04);transition:width .8s var(--ease),height .8s var(--ease)}
+.glass::after{content:"";position:absolute;right:-28px;top:18%;width:22px;height:42%;border:2px solid rgba(239,227,208,.75);border-left:0;border-radius:0 40px 40px 0}
+.glass .fill{position:absolute;left:0;right:0;bottom:0;display:flex;flex-direction:column-reverse;border-radius:0 0 32px 32px;overflow:hidden;transition:height .9s var(--ease)}
+.glass .ly{flex:none;transition:height .9s var(--ease);position:relative}
+.ly.espresso{background:#4a2a17}
+.ly.espresso::after{content:"";position:absolute;left:0;right:0;top:0;height:5px;background:#c08552}
+.ly.water{background:rgba(150,180,200,.35)}
+.ly.milk{background:#e6d7c0}
+.ly.foam{background:#faf5ec}
+.ly.choc{background:#2e170c}
+.ice-cubes{position:absolute;inset:0;pointer-events:none}
+.ice-cubes i{position:absolute;width:24px;height:24px;border:1.5px solid rgba(255,255,255,.7);background:rgba(220,235,245,.2);border-radius:5px}
+.dinfo{display:flex;flex-direction:column;gap:12px;min-width:0}
+.dinfo h3{font-size:clamp(36px,3.6vw,52px);line-height:1;overflow-wrap:anywhere}
+.dinfo p{margin:0;color:var(--muted);max-width:40ch}
+.dmeta{display:flex;flex-wrap:wrap;gap:8px}
+.dmeta span{font-size:12px;letter-spacing:.08em;padding:4px 10px;border-radius:999px;border:1px solid var(--line);color:var(--muted)}
+.legend{display:flex;flex-wrap:wrap;gap:14px;font-size:13px;color:var(--muted)}
+.legend span{display:flex;align-items:center;gap:6px}
+.legend i{width:10px;height:10px;border-radius:50%}
+.dinfo.swap > *{animation:fadeUp .7s var(--ease) both}
+.dinfo.swap > *:nth-child(2){animation-delay:.04s}
+.dinfo.swap > *:nth-child(3){animation-delay:.08s}
+@keyframes fadeUp{from{transform:translateY(12px);opacity:.3}to{transform:none;opacity:1}}
+
+/* equipment accordion */
+.kit{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:0 clamp(24px,5vw,72px);align-items:start}
+@media (max-width:860px){.kit{grid-template-columns:minmax(0,1fr)}}
+.kit-col .label{display:block;color:var(--muted);padding-bottom:14px;border-bottom:1px solid var(--line)}
+@media (max-width:860px){.kit-col + .kit-col{margin-top:44px}}
+.kit-item{border-bottom:1px solid var(--line)}
+.kit-btn{all:unset;box-sizing:border-box;cursor:pointer;width:100%;display:flex;justify-content:space-between;align-items:center;gap:16px;padding:20px 0}
+.kit-btn span{font-family:var(--display);font-size:clamp(26px,2.8vw,34px);line-height:1.1;transition:color .4s,transform .6s var(--ease)}
+.kit-btn small{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
+.kit-btn:hover span{color:var(--caramel);transform:translateX(8px)}
+.kit-btn:focus-visible{outline:2px solid var(--caramel);outline-offset:2px}
+.kit-btn[aria-expanded="true"] span{color:var(--caramel)}
+.kit-body{display:grid;grid-template-rows:0fr;transition:grid-template-rows .7s var(--ease)}
+.kit-item.open .kit-body{grid-template-rows:1fr}
+.kit-body > div{overflow:hidden}
+.kit-body .in{padding:0 0 24px;display:flex;flex-direction:column;gap:10px;max-width:52ch}
+.kit-body .da{font-size:13px;color:var(--muted)}
+.kit-body p{margin:0}
+.kit-body .tip{font-size:15px;color:var(--muted)}
+.kit-body .tip b{color:var(--cream);font-weight:500}
+
+/* sign up */
+.signup{background:var(--surface)}
+.signup h2{max-width:14ch}
+.steps3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:1px solid var(--line)}
+@media (max-width:860px){.steps3{grid-template-columns:minmax(0,1fr)}}
+.step{padding:32px 28px 32px 0;display:flex;flex-direction:column;gap:12px;border-right:1px solid var(--line)}
+.step + .step{padding-left:28px}
+.step:last-child{border-right:0}
+@media (max-width:860px){.step,.step + .step{border-right:0;border-bottom:1px solid var(--line);padding-inline:0}}
+.step .n{font-family:var(--display);font-style:italic;font-size:56px;line-height:1;color:var(--caramel)}
+.step h3{font-size:30px;line-height:1.1}
+.step p{margin:0;color:var(--muted)}
+.where{margin-top:48px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px}
+@media (max-width:760px){.where{grid-template-columns:minmax(0,1fr)}}
+.where div{border-radius:24px;border:1px solid var(--line);padding:28px;display:flex;flex-direction:column;gap:6px}
+.where b{font-family:var(--display);font-weight:400;font-size:30px;line-height:1.1}
+.where span{color:var(--muted)}
+
+/* faq */
+.faq{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.5fr);gap:clamp(24px,5vw,72px)}
+@media (max-width:880px){.faq{grid-template-columns:minmax(0,1fr)}}
+details{border-top:1px solid var(--line)}
+details:last-child{border-bottom:1px solid var(--line)}
+summary{list-style:none;cursor:pointer;padding-block:24px;display:flex;justify-content:space-between;gap:20px;font-family:var(--display);font-size:clamp(24px,2.4vw,30px);line-height:1.2;transition:color .3s}
+summary:hover{color:var(--caramel)}
+summary::-webkit-details-marker{display:none}
+summary .pm{flex:none;width:28px;height:28px;border-radius:50%;box-shadow:inset 0 0 0 1px var(--line);position:relative;transition:transform .6s var(--ease)}
+summary .pm::before,summary .pm::after{content:"";position:absolute;left:50%;top:50%;width:11px;height:1px;background:var(--cream);transform:translate(-50%,-50%)}
+summary .pm::after{transform:translate(-50%,-50%) rotate(90deg)}
+details[open] summary .pm{transform:rotate(135deg)}
+details p{margin:0 0 24px;color:var(--muted);max-width:60ch}
+
+/* milk stream */
+body{position:relative}
+#milk{position:absolute;left:0;top:0;width:100%;pointer-events:none;z-index:1;overflow:visible}
+section > .wrap,.hs-pin > *,footer > *{position:relative;z-index:2}
+.finale-sec{text-align:center}
+.fin{display:flex;flex-direction:column;align-items:center}
+.fin .sec-head{align-items:center;margin-bottom:0}
+.fin .lede{margin-inline:auto}
+#cup{width:min(400px,88%);height:auto;overflow:visible;margin:110px 0 44px}
+
+/* footer */
+footer{background:var(--black);padding-block:72px 40px;overflow:hidden;border-top:1px solid var(--line)}
+.marq{display:flex;width:max-content;will-change:transform}
+.marq span{font-family:var(--display);font-size:clamp(80px,14vw,200px);line-height:1;letter-spacing:-.03em;white-space:nowrap;padding-right:.4em}
+.marq span em{font-style:italic;color:var(--caramel)}
+.foot{display:flex;justify-content:space-between;gap:16px 32px;flex-wrap:wrap;margin-top:40px;padding-top:24px;border-top:1px solid var(--line);font-size:14px;color:var(--muted)}
+.foot div{display:flex;gap:6px 28px;flex-wrap:wrap}
+
+/* cursor */
+.cursor{position:fixed;left:0;top:0;width:10px;height:10px;margin:-5px 0 0 -5px;border-radius:50%;background:var(--cream);pointer-events:none;z-index:70;mix-blend-mode:difference;transition:width .4s var(--ease),height .4s var(--ease),margin .4s var(--ease),opacity .3s;opacity:0}
+.cursor.big{width:54px;height:54px;margin:-27px 0 0 -27px}
+
+.rv{transform:translateY(48px);transition:transform 1.3s var(--ease)}
+.rv.in{transform:none}
+@media (prefers-reduced-motion:reduce){
+  .rv{transform:none;transition:none}
+  .hero h1 .ln span,.scroll-cue i::after{animation:none}
+  .glass,.glass .fill,.glass .ly,.kit-body,.goal::before,.goal h3,.dinfo.swap > *{transition:none;animation:none}
+  .cursor{display:none}
+}
+</style>
+
+<header class="top" id="hdr">
+  <div class="wrap">
+    <a class="brand" href="#top" data-go><b>Nørrebro Barista</b><small>af RCYN</small></a>
+    <nav class="links" aria-label="Sektioner">
+      <a href="#maal" data-go>Det lærer du</a><a href="#lektioner" data-go>Lektioner</a><a href="#drikke" data-go>Drikke</a><a href="#udstyr" data-go>Udstyr</a><a href="#faq" data-go>Spørgsmål</a>
+    </nav>
+    <a class="btn primary" href="#tilmelding" data-go>Tilmeld dig</a>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <canvas id="steam" aria-hidden="true"></canvas>
+    <div class="wrap">
+      <span class="label">Kaffekursus · RCYN, Ressourcecenter Ydre Nørrebro</span>
+      <h1 aria-label="Nørrebro Barista"><span class="ln"><span>Nørrebro</span></span><span class="ln"><span><em>Barista</em></span></span></h1>
+      <div class="hero-row">
+        <p><b>Bliv barista på to måneder.</b> Én lektion om ugen ved espressomaskinen, steamarmen og kaffevognen, til du kan klare en hel ordre selv.</p>
+        <div class="cta-row">
+          <a class="btn primary" href="#tilmelding" data-go>Sådan tilmelder du dig <span class="arr" aria-hidden="true">→</span></a>
+          <a class="btn ghost" href="#lektioner" data-go>Se lektionerne</a>
+        </div>
+      </div>
+      <div class="scroll-cue" aria-hidden="true"><i></i>Scroll</div>
+    </div>
+  </section>
+
+  <section class="manifesto">
+    <div class="wrap">
+      <p id="mani">Fra første shot til en hel ordre. På to måneder lærer du *espressomaskinen,* *mælken* og *kaffevognen* at kende, og til sidst står du bag disken i et café-rollespil på tid.</p>
+    </div>
+  </section>
+
+  <section style="padding-top:0">
+    <div class="wrap">
+      <div class="facts rv">
+        <div class="fact"><b>2</b><span>måneder</span></div>
+        <div class="fact"><b>1</b><span>lektion om ugen</span></div>
+        <div class="fact"><b>1,5–2</b><span>timer pr. lektion</span></div>
+        <div class="fact"><b>11</b><span>kaffedrikke</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="maal">
+    <div class="wrap">
+      <div class="sec-head rv">
+        <span class="label">Mål for kurset</span>
+        <h2>Det <em>lærer</em> du</h2>
+      </div>
+      <div class="goals" id="goals"></div>
+    </div>
+  </section>
+
+  <div class="hs" id="lektioner">
+    <div class="hs-pin">
+      <div class="wrap">
+        <div class="sec-head" style="margin-bottom:0">
+          <span class="label">Kursusplanen</span>
+          <h2 class="sans">Lektion for <em>lektion</em></h2>
+        </div>
+      </div>
+      <div class="hs-track" id="track"></div>
+      <div class="wrap"><div class="hs-foot"><div class="hs-bar"><i id="hsBar"></i></div><span class="hs-count" id="hsCount">01 / 06</span></div></div>
+    </div>
+  </div>
+
+  <section id="drikke">
+    <div class="wrap">
+      <div class="sec-head rv">
+        <span class="label">Den store kaffeguide</span>
+        <h2>Elleve drikke, <em>én</em> maskine</h2>
+        <p class="lede">Alle drikke på kurset starter med en single eller double espresso. Forskellen ligger i vandet, mælken, skummet og koppen. Vælg en drik for at se, hvordan den er bygget op.</p>
+      </div>
+      <div class="guide">
+        <div class="drink-list rv" id="drinkList"></div>
+        <div class="dcard rv">
+          <div class="glasswrap"><div class="glass" id="glass"><div class="fill" id="fill"></div><div class="ice-cubes" id="ice" hidden></div></div></div>
+          <div class="dinfo" id="dinfo">
+            <div class="dmeta" id="dMeta"></div>
+            <h3 id="dName"></h3>
+            <p id="dDesc"></p>
+            <div class="legend" id="dLegend"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="udstyr" style="background:var(--black)">
+    <div class="wrap">
+      <div class="sec-head rv">
+        <span class="label">Barista-udstyr og maskiner</span>
+        <h2>Kend dit <em>udstyr</em></h2>
+        <p class="lede">Værktøjerne og maskinerne, du bruger hos RCYN. Åbn et punkt for at se, hvad det bruges til, og hvornår du møder det.</p>
+      </div>
+      <div class="kit" id="kit"></div>
+    </div>
+  </section>
+
+  <section class="signup" id="tilmelding">
+    <div class="wrap">
+      <div class="sec-head rv">
+        <span class="label">Tilmelding</span>
+        <h2>Tilmeld dig <em>lektion</em> for lektion</h2>
+        <p class="lede">Der er ingen tilmeldingsformular. Du tilmelder dig hver lektion på Messenger eller Facebook, så holdet altid ved, hvem der kommer.</p>
+      </div>
+      <div class="steps3 rv">
+        <div class="step"><span class="n">i.</span><h3>Bliv en del af gruppen</h3><p>Kurset har en gruppe på Facebook og på Messenger. Det er der, lektionerne bliver meldt ud.</p></div>
+        <div class="step"><span class="n">ii.</span><h3>Tilmeld dig hver lektion</h3><p>Skriv til Farooq på Messenger, eller tilmeld dig i Facebook-gruppen, før hver lektion du vil være med til.</p></div>
+        <div class="step"><span class="n">iii.</span><h3>Kan du ikke komme? Så skriv!</h3><p>Hvis du ikke kan deltage, så husk at skrive. Det hjælper med at planlægge kaffe, mælk og pladser ved maskinen.</p></div>
+      </div>
+      <div class="where">
+        <div class="rv"><span class="label">Hvor</span><b>RCYN, Ressourcecenter Ydre Nørrebro</b><span>En del af Kantara. Lektionerne foregår ved RCYN’s kaffebord og på kaffevognen.</span></div>
+        <div class="rv"><span class="label">Hvem</span><b>Farooq, projektansvarlig</b><span>Skriv til Farooq på Messenger for at tilmelde dig eller spørge om næste lektion.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq">
+    <div class="wrap faq">
+      <div class="sec-head rv">
+        <span class="label">Før du starter</span>
+        <h2>Ofte stillede <em>spørgsmål</em></h2>
+      </div>
+      <div class="rv">
+        <details open><summary>Hvor lang tid varer kurset?<span class="pm" aria-hidden="true"></span></summary><p>To måneder med én lektion hver uge. Hver lektion varer cirka halvanden til to timer.</p></details>
+        <details><summary>Hvordan tilmelder jeg mig?<span class="pm" aria-hidden="true"></span></summary><p>Du tilmelder dig hver lektion for sig, enten ved at skrive til Farooq på Messenger eller i kursets Facebook-gruppe.</p></details>
+        <details><summary>Hvad hvis jeg ikke kan komme?<span class="pm" aria-hidden="true"></span></summary><p>Husk at skrive. Hver lektion starter med repetition fra sidst, så det er nemt at komme med igen.</p></details>
+        <details><summary>Hvad sker der til sidste lektion?<span class="pm" aria-hidden="true"></span></summary><p>Et café-rollespil. To ad gangen får én stor ordre og et bestemt antal minutter til at lave den. Der er fokus på kaffeteknik, samarbejde, kommunikation, opmærksomhed og kundeservice, og holdet evaluerer hver runde sammen.</p></details>
+      </div>
+    </div>
+  </section>
+  <section class="finale-sec" id="hjerte">
+    <div class="wrap">
+      <div class="fin">
+        <div class="sec-head rv">
+          <span class="label">Slutresultatet</span>
+          <h2>Fra kande til <em>hjerte</em></h2>
+          <p class="lede">Det er det, du lærer på Nørrebro Barista: at styre mælken hele vejen fra kanden og ned i koppen.</p>
+        </div>
+        <svg id="cup" viewBox="0 0 320 210" role="img" aria-label="En kop kaffe med et latte art-hjerte">
+          <defs>
+            <radialGradient id="crema" cx="50%" cy="45%" r="60%"><stop offset="0" stop-color="#c58a55"/><stop offset=".7" stop-color="#9a5f33"/><stop offset="1" stop-color="#5e341b"/></radialGradient>
+            <linearGradient id="porc" x1="0" x2="1"><stop offset="0" stop-color="#d9ccb8"/><stop offset=".45" stop-color="#f3ebde"/><stop offset="1" stop-color="#cbbca6"/></linearGradient>
+          </defs>
+          <ellipse cx="160" cy="184" rx="150" ry="24" fill="#251b14" stroke="rgba(239,227,208,.18)"/>
+          <ellipse cx="160" cy="180" rx="96" ry="12" fill="rgba(0,0,0,.35)"/>
+          <path d="M252 104 C 304 98, 304 160, 246 160" fill="none" stroke="url(#porc)" stroke-width="13" stroke-linecap="round"/>
+          <path d="M60 86 C 60 150, 96 178, 160 178 C 224 178, 260 150, 260 86 Z" fill="url(#porc)"/>
+          <ellipse cx="160" cy="86" rx="100" ry="26" fill="#efe6d8"/>
+          <ellipse cx="160" cy="88" rx="89" ry="21" fill="url(#crema)"/>
+          <g id="heart" transform="translate(160 88) scale(1 .42) scale(0)">
+            <path d="M0 26 C -42 0, -46 -34, -22 -40 C -8 -43, 0 -32, 0 -24 C 0 -32, 8 -43, 22 -40 C 46 -34, 42 0, 0 26 Z" fill="#f7f0e4"/>
+          </g>
+          <circle id="cupTarget" cx="160" cy="84" r="1" fill="none"/>
+        </svg>
+        <a class="btn primary" href="#tilmelding" data-go>Tilmeld dig <span class="arr" aria-hidden="true">→</span></a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="marq" id="marq" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="foot">
+      <div><span>Af RCYN, i RCYN</span><span>Ressourcecenter Ydre Nørrebro · Kantara</span></div>
+      <div><span>Projektansvarlig: Farooq</span><span>Tilmelding via Messenger eller Facebook</span></div>
+    </div>
+  </div>
+</footer>
+<div class="cursor" id="cursor" aria-hidden="true"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+<script>
+(() => {
+const $ = s => document.querySelector(s);
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const fine = matchMedia('(pointer: fine)').matches;
+
+/* ---------- smooth scroll ---------- */
+let lenis = null;
+if (!reduce && typeof window.Lenis === 'function'){
+  try { lenis = new Lenis({ duration:1.15, easing:t => 1 - Math.pow(1 - t, 4), smoothWheel:true }); } catch(e) { lenis = null; }
+}
+document.querySelectorAll('[data-go]').forEach(a => a.addEventListener('click', e => {
+  const id = a.getAttribute('href'); const el = id && document.querySelector(id); if (!el) return;
+  e.preventDefault();
+  if (lenis) lenis.scrollTo(el, { offset: 0 });
+  else el.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' });
+}));
+
+/* ---------- steam ---------- */
+const cv = $('#steam'), ctx = cv.getContext('2d');
+let W = 0, H = 0, puffs = [], mx = .5, my = .5, tmx = .5, tmy = .5;
+function sizeSteam(){
+  const r = cv.getBoundingClientRect(); W = Math.max(1, r.width/3); H = Math.max(1, r.height/3);
+  cv.width = Math.round(W); cv.height = Math.round(H);
+  puffs = Array.from({length:14}, (_, i) => ({ x:Math.random(), y:Math.random(), r:.18 + Math.random()*.28, s:.008 + Math.random()*.02, p:Math.random()*Math.PI*2, c:i % 3 }));
+}
+const PUFFC = ['192,133,82','107,67,41','239,227,208'];
+function drawSteam(t){
+  ctx.clearRect(0,0,W,H);
+  ctx.globalCompositeOperation = 'lighter';
+  mx += (tmx - mx)*.04; my += (tmy - my)*.04;
+  for (const p of puffs){
+    if (!reduce){ p.y -= p.s*.016; if (p.y < -.3){ p.y = 1.3; p.x = Math.random(); } }
+    const x = (p.x + Math.sin(t*.0003 + p.p)*.06 + (mx - .5)*.06*(p.c+1)) * W;
+    const y = (p.y + (my - .5)*.04) * H;
+    const r = p.r * Math.max(W, H);
+    const a = p.c === 2 ? .05 : .16;
+    const g = ctx.createRadialGradient(x, y, 0, x, y, r);
+    g.addColorStop(0, `rgba(${PUFFC[p.c]},${a})`); g.addColorStop(1, `rgba(${PUFFC[p.c]},0)`);
+    ctx.fillStyle = g; ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI*2); ctx.fill();
+  }
+  ctx.globalCompositeOperation = 'source-over';
+}
+addEventListener('pointermove', e => { tmx = e.clientX/innerWidth; tmy = e.clientY/innerHeight; });
+
+/* ---------- manifesto ---------- */
+const mani = $('#mani');
+const words = mani.textContent.trim().split(/\s+/);
+mani.setAttribute('aria-label', mani.textContent.replace(/\*/g,'').trim());
+mani.innerHTML = words.map(w => { const em = /^\*.*\*[,.]?$/.test(w); const t = w.replace(/\*/g,''); return `<span class="w${em ? ' em' : ''}" aria-hidden="true">${t}</span>`; }).join(' ');
+const wEls = [...mani.querySelectorAll('.w')];
+function updateMani(){
+  const r = mani.getBoundingClientRect();
+  const p = reduce ? 1 : Math.min(1, Math.max(0, (innerHeight*.85 - r.top) / (r.height + innerHeight*.35)));
+  const n = Math.round(p * wEls.length);
+  wEls.forEach((w, i) => w.classList.toggle('on', i < n));
+}
+
+/* ---------- goals ---------- */
+const GOALS = [
+  ['Udstyr og maskine','Lær værktøjerne og maskinerne at kende.'],
+  ['Espressomaskinen','Hvordan den virker, knapper og funktioner.'],
+  ['Kaffekværnen','Finmalet og grovmalet, og hvornår du bruger hvad.'],
+  ['Rengøring','Sådan rengør du en espressomaskine.'],
+  ['Mængder','Hvor meget der skal i kopper og mælkekander.'],
+  ['Steaming af mælk','Steam forskellige slags mælk.'],
+  ['Kundeservice','Service og klargøring af arrangementer.'],
+  ['Latte art','Mønstre i mælkeskummet.'],
+];
+$('#goals').innerHTML = GOALS.map(g => `<div class="goal rv"><h3>${g[0]}</h3><p>${g[1]}</p></div>`).join('');
+
+/* ---------- lessons ---------- */
+const LESSONS = [
+  { tag:'Lektion 1', num:'1', t:'Base', items:['Lær maskinen at kende','Tamp og kurv/portafilter','Steamarmen','Espresso: double og single','Cappuccino','Cafe latte'], rep:['Godt at vide','Espresso laves som double og single shot. Ristretto er kortere, lungo er længere.'] },
+  { tag:'Lektion 2', num:'2', t:'Espresso varianter', items:['Americano','Cortado','Macchiato','Flat white','Ristretto','Lungo'], rep:['Repetition fra sidst','Espresso double og single, cappuccino, cafe latte'] },
+  { tag:'Lektion 3', num:'3', t:'Forskellige slags mælk', items:['Steam med forskellige slags mælk til cappuccino, latte, macchiato og cortado','Lav kaffe til store og små kopper','Prøv at steame med store og små kander','Intro til latte art'], rep:['Repetition fra sidst','Americano, lungo, cortado, macchiato, flat white'] },
+  { tag:'Lektion 4 · del 1', num:'4', t:'Kaffevogn og kaffebordet', items:['Introduktion til kaffevognen','Forskellene mellem kaffevognen og kaffebordet','Repetition af det, I har lært, på kaffevognen','Evaluering af begge maskiner','Hvad man kan komme ud for i den virkelige verden'], rep:['Godt at vide','Kaffebordet er espressomaskinen i RCYN. Kaffevognen er den mobile kaffebar til arrangementer.'] },
+  { tag:'Lektion 4 · del 2', num:'4', t:'Latte art', items:['Gennemgang af latte art-videoen','Hæld, vrik og træk igennem','Øv mønstrene, kop efter kop'], rep:['Se videoen','<a href="https://youtu.be/SiefJJv-Qho?si=dpjYz8nRxDbk0mHf" target="_blank" rel="noopener">Latte art-video på YouTube ↗</a>'] },
+  { tag:'Afslutning', num:'✦', t:'Café-rollespil', items:['Holdet sættes under pres: et bestemt antal minutter til et bestemt antal kaffe','To ad gangen med én stor ordre, der tages tid','Fokus på kaffeteknik, samarbejde, kommunikation, opmærksomhed og kundeservice','Evaluering af de to rollespil'], rep:['Målet','At klare en rigtig ordre roligt og sikkert, også når der er travlt.'], finale:true },
+];
+$('#track').innerHTML = LESSONS.map(l => `
+  <article class="lesson${l.finale ? ' finale' : ''}">
+    <span class="num" aria-hidden="true">${l.num}</span>
+    <span class="tag">${l.tag}</span>
+    <h3>${l.t}</h3>
+    <ul>${l.items.map(i => `<li><span>${i}</span></li>`).join('')}</ul>
+    <div class="rep"><b>${l.rep[0]}</b>${l.rep[1]}</div>
+  </article>`).join('');
+const hs = $('.hs'), pin = $('.hs-pin'), track = $('#track');
+let hsDist = 0;
+function sizeHS(){
+  if (innerWidth <= 760){ hs.style.height = ''; hsDist = 0; track.style.transform = ''; return; }
+  hsDist = Math.max(0, track.scrollWidth - innerWidth);
+  hs.style.height = (pin.offsetHeight + hsDist) + 'px';
+}
+function updateHS(){
+  if (!hsDist) return;
+  const top = hs.getBoundingClientRect().top;
+  const p = Math.min(1, Math.max(0, -top / hsDist));
+  track.style.transform = `translate3d(${-p*hsDist}px,0,0)`;
+  $('#hsBar').style.transform = `scaleX(${p})`;
+  const n = Math.min(LESSONS.length, Math.floor(p*(LESSONS.length - .001)) + 1);
+  $('#hsCount').textContent = String(n).padStart(2,'0') + ' / ' + String(LESSONS.length).padStart(2,'0');
+}
+
+/* ---------- drinks ---------- */
+const DRINKS = [
+  { id:'espresso', name:'Espresso', cup:'small', fill:.5, layers:[['espresso',1]], lesson:'Lektion 1', group:'black', desc:'Single eller double shot. Grundlaget for alle drikke på listen.' },
+  { id:'ristretto', name:'Ristretto', cup:'small', fill:.32, layers:[['espresso',1]], lesson:'Lektion 2', group:'black', desc:'Et kort, koncentreret shot. Samme kaffe, mindre vand.' },
+  { id:'lungo', name:'Lungo', cup:'small', fill:.82, layers:[['espresso',1]], lesson:'Lektion 2', group:'black', desc:'Et langt shot, hvor der løber mere vand gennem kaffen.' },
+  { id:'americano', name:'Americano', cup:'large', fill:.86, layers:[['water',.68],['espresso',.32]], lesson:'Lektion 2', group:'black', desc:'Altid vand i først og espressoen efter. Så mixer kaffen bedre.' },
+  { id:'cappuccino', name:'Cappuccino', cup:'medium', fill:.9, layers:[['espresso',.3],['milk',.35],['foam',.35]], lesson:'Lektion 1', group:'milk', desc:'Single eller double shot. Det varierer fra café til café.' },
+  { id:'latte', name:'Cafe latte', cup:'large', fill:.9, layers:[['espresso',.2],['milk',.66],['foam',.14]], lesson:'Lektion 1', group:'milk', desc:'Single eller double shot med mere steamet mælk. En latte har mere mælk end en cappuccino.' },
+  { id:'macchiato', name:'Macchiato', cup:'small', fill:.66, layers:[['espresso',.66],['milk',.14],['foam',.2]], lesson:'Lektion 2', group:'milk', desc:'Betyder plettet kaffe på italiensk. God huskeregel: server skummet som pletter, med lidt steamet mælk, i en lille kop.' },
+  { id:'cortado', name:'Cortado', cup:'small', fill:.82, layers:[['espresso',.5],['milk',.5]], lesson:'Lektion 2', group:'milk', desc:'Serveres i en lille kop. Mængden af kaffe og mælk skal være ca. den samme (50/50).' },
+  { id:'flatwhite', name:'Flat white', cup:'medium', fill:.88, layers:[['espresso',.32],['milk',.6],['foam',.08]], lesson:'Lektion 2', group:'milk', desc:'Minder meget om en cappuccino, men med mindre mælkeskum.' },
+  { id:'mocha', name:'Mocha', cup:'large', fill:.9, layers:[['choc',.14],['espresso',.2],['milk',.52],['foam',.14]], lesson:'Bonus', group:'bonus', desc:'Chokolade, espresso og steamet mælk. En bonusdrik på kurset.' },
+  { id:'iced', name:'Iskaffe', cup:'large', fill:.86, layers:[['milk',.62],['espresso',.38]], lesson:'Bonus', group:'bonus', ice:true, desc:'Espresso over is og kold mælk. Den anden bonusdrik.' },
+];
+const CUPNAME = { small:'Lille kop', medium:'Mellemstor kop', large:'Stor kop' };
+const CUPS = { small:[92,100], medium:[144,144], large:[170,192] };
+const LNAME = { espresso:'Espresso', water:'Varmt vand', milk:'Steamet mælk', foam:'Mælkeskum', choc:'Chokolade' };
+const LCOL = { espresso:'#8a5530', water:'rgba(150,180,200,.8)', milk:'#e6d7c0', foam:'#faf5ec', choc:'#5a2e1c' };
+const GROUPS = [['black','Sort kaffe'],['milk','Kaffe med mælk'],['bonus','Bonus']];
+let drink = 'cappuccino';
+$('#drinkList').innerHTML = GROUPS.map(([g, t]) => `<div class="dgroup"><span class="label">${t}</span><div class="dchips">${DRINKS.filter(d => d.group === g).map(d => `<button class="dchip" type="button" data-d="${d.id}" aria-pressed="false">${d.name}</button>`).join('')}</div></div>`).join('');
+$('#drinkList').addEventListener('click', e => { const b = e.target.closest('[data-d]'); if (!b) return; drink = b.dataset.d; renderDrink(true); });
+const ORDER = ['choc','water','espresso','milk','foam'];
+const fill = $('#fill'), layerEls = {};
+ORDER.forEach(t => { const d = document.createElement('div'); d.className = 'ly ' + t; d.style.height = '0%'; layerEls[t] = d; });
+function renderDrink(anim){
+  const d = DRINKS.find(x => x.id === drink);
+  document.querySelectorAll('.dchip').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.d === drink)));
+  const [w, h] = CUPS[d.cup];
+  const g = $('#glass'); g.style.width = w + 'px'; g.style.height = h + 'px';
+  fill.style.height = (d.fill*100) + '%';
+  fill.replaceChildren(...d.layers.map(l => layerEls[l[0]]), ...ORDER.filter(t => !d.layers.some(l => l[0] === t)).map(t => layerEls[t]));
+  ORDER.forEach(t => { const l = d.layers.find(x => x[0] === t); layerEls[t].style.height = l ? (l[1]*100) + '%' : '0%'; });
+  const ice = $('#ice'); ice.hidden = !d.ice;
+  if (d.ice) ice.innerHTML = [[16,40],[50,28],[94,46],[28,64],[76,70],[116,62]].map(([x,y]) => `<i style="left:${x}px;top:${y}px;transform:rotate(${(x*7)%30-15}deg)"></i>`).join('');
+  $('#dName').textContent = d.name;
+  $('#dDesc').textContent = d.desc;
+  $('#dMeta').innerHTML = `<span>${d.lesson}</span><span>${CUPNAME[d.cup]}</span>`;
+  $('#dLegend').innerHTML = d.layers.slice().reverse().map(l => `<span><i style="background:${LCOL[l[0]]}"></i>${LNAME[l[0]]}</span>`).join('') + (d.ice ? '<span><i style="background:rgba(220,235,245,.9)"></i>Is</span>' : '');
+  if (anim && !reduce){ const el = $('#dinfo'); el.classList.remove('swap'); void el.offsetWidth; el.classList.add('swap'); }
+}
+
+/* ---------- equipment ---------- */
+const KIT = [
+  { g:'Barista-udstyr', name:'Portafilter og kurv', da:'Portafilter / filterholder / kurven', lesson:'Lektion 1', desc:'Håndtaget, der låses fast i maskinen. Kurven indeni holder den malede kaffe, med en lille kurv til single shot og en større til double.', tip:'Tør kurven af, før du fylder den.' },
+  { g:'Barista-udstyr', name:'Kaffestamper', da:'Kaffestamper / tamper', lesson:'Lektion 1', desc:'Presser den malede kaffe til en flad, jævn puck. En jævn puck får vandet til at løbe lige hurtigt gennem al kaffen.', tip:'Tryk lige ned, og hold stamperen vandret.' },
+  { g:'Barista-udstyr', name:'WDT-værktøj', da:'Weiss distribution tool', lesson:'Lektion 1', desc:'Tynde nåle, du rører rundt i kaffen med før tampning. Det bryder klumper, så kaffen ligger jævnt i kurven.', tip:'Rør i små cirkler helt ned til bunden.' },
+  { g:'Barista-udstyr', name:'Kaffekværn', da:'Finmalet og grovmalet', lesson:'Lektion 1', desc:'Maler bønnerne fint eller groft. Finmalet kaffe er til espresso. Grovmalet kaffe lader vandet løbe hurtigere igennem og bruges til andre bryggemetoder.', tip:'Løber shottet for hurtigt, så mal finere. Løber det for langsomt, så mal grovere.' },
+  { g:'Barista-udstyr', name:'Mælkekande', da:'Store og små kander', lesson:'Lektion 3', desc:'Kanden du steamer mælk i. En lille kande passer til cortado og macchiato, en stor til latte og flere drikke ad gangen.', tip:'Fyld op til lige under tuden, før du steamer.' },
+  { g:'Barista-udstyr', name:'Knock box', da:'Til brugt kaffe', lesson:'Lektion 1', desc:'En kasse med en stang på tværs. Bank portafilteret mod stangen, så den brugte kaffepuck falder ud.', tip:'Tøm den efter hver lektion.' },
+  { g:'Barista-udstyr', name:'Rensebørster', da:'Rengøring af maskinen', lesson:'Hver lektion', desc:'Bruges til at rengøre bryggehovedet, kurven og steamarmen. At kunne rengøre espressomaskinen er et af kursets mål.', tip:'Tør steamarmen af, og blæs den igennem efter hver kande mælk.' },
+  { g:'Maskiner', name:'Espressomaskine', da:'Knapper og funktioner', lesson:'Lektion 1', desc:'Lær hvad knapperne og funktionerne gør, hvordan du laver single og double shot, og hvordan du bruger steamarmen.', tip:'Skyl lidt vand gennem bryggehovedet før hvert shot.' },
+  { g:'Maskiner', name:'Kaffebordet', da:'Espressomaskinen i RCYN', lesson:'Lektion 1–3', desc:'RCYN’s egen espresso-opstilling, hvor det meste af kurset foregår.', tip:'Her lærer du basen, før I går videre til kaffevognen.' },
+  { g:'Maskiner', name:'Kaffevogn', da:'Den mobile kaffebar', lesson:'Lektion 4', desc:'Den mobile kaffebar, der bruges til arrangementer. I lektion 4 lærer du forskellen fra kaffebordet og repeterer alt, du har lært, på vognen.', tip:'Godt at kunne til kundeservice og klargøring af arrangementer.' },
+];
+const kg = [...new Set(KIT.map(k => k.g))];
+$('#kit').innerHTML = kg.map(g => `<div class="kit-col rv"><span class="label">${g}</span>${KIT.map((k, i) => k.g !== g ? '' : `
+  <div class="kit-item${i === 0 || i === 7 ? ' open' : ''}">
+    <button class="kit-btn" type="button" aria-expanded="${i === 0 || i === 7}" aria-controls="kb${i}"><span>${k.name}</span><small>${k.lesson}</small></button>
+    <div class="kit-body" id="kb${i}"><div><div class="in"><span class="da">${k.da}</span><p>${k.desc}</p><span class="tip"><b>Tip:</b> ${k.tip}</span></div></div></div>
+  </div>`).join('')}</div>`).join('');
+$('#kit').addEventListener('click', e => {
+  const b = e.target.closest('.kit-btn'); if (!b) return;
+  const item = b.parentElement, open = !item.classList.contains('open');
+  item.classList.toggle('open', open); b.setAttribute('aria-expanded', String(open));
+  setTimeout(() => lenis?.resize?.(), 750);
+});
+
+/* ---------- footer marquee ---------- */
+const marq = $('#marq');
+marq.innerHTML = '<span>Nørrebro <em>Barista</em> ✦ RCYN ✦</span>'.repeat(4);
+let mqX = 0, vel = 0, lastY = scrollY;
+
+/* ---------- header ---------- */
+const hdr = $('#hdr');
+let lastHdrY = 0;
+function updateHeader(y){
+  hdr.classList.toggle('solid', y > 40);
+  const down = y > lastHdrY + 1 && y > 400;
+  const up = y < lastHdrY - 1;
+  const hsr = hs.getBoundingClientRect();
+  const inPin = hsDist && hsr.top <= 0 && hsr.bottom >= innerHeight;
+  if (inPin || down) hdr.classList.add('hide'); else if (up || y < 400) hdr.classList.remove('hide');
+  lastHdrY = y;
+}
+
+/* ---------- cursor ---------- */
+const cur = $('#cursor');
+let cx = -100, cy = -100, tx = -100, ty = -100;
+if (fine && !reduce){
+  addEventListener('pointermove', e => { tx = e.clientX; ty = e.clientY; cur.style.opacity = 1; });
+  document.addEventListener('pointerover', e => cur.classList.toggle('big', !!e.target.closest('a,button,summary')));
+  document.documentElement.addEventListener('pointerleave', () => cur.style.opacity = 0);
+}
+
+/* ---------- reveal ---------- */
+if ('IntersectionObserver' in window && !reduce){
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } }), { rootMargin:'0px 0px -8% 0px' });
+  document.querySelectorAll('.rv').forEach(el => io.observe(el));
+} else document.querySelectorAll('.rv').forEach(el => el.classList.add('in'));
+
+/* ---------- milk river: meanders from jug to cup, always under the text ---------- */
+const NS = 'http://www.w3.org/2000/svg';
+const milk = document.createElementNS(NS, 'svg');
+milk.id = 'milk'; milk.setAttribute('aria-hidden', 'true');
+milk.innerHTML = `
+  <defs>
+    <clipPath id="mClip"><rect id="mClipRect" x="0" y="0" width="0" height="0"/></clipPath>
+    <linearGradient id="mFadeG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#000"/></linearGradient>
+    <mask id="mText" maskUnits="userSpaceOnUse"><rect id="mMaskBg" x="0" y="0" width="0" height="0" fill="#fff"/><rect id="mFade" x="0" y="0" width="0" height="90" fill="url(#mFadeG)"/><g id="mHoles"></g><g id="mHolesLive"></g></mask>
+  </defs>
+  <g id="jug">
+    <path d="M14 36 C -16 40, -16 94, 12 98" fill="none" stroke="#d8c9b3" stroke-width="7" stroke-linecap="round"/>
+    <path d="M20 16 L74 16 L80 26 L90 104 Q91 116 79 116 L21 116 Q9 116 10 104 L20 26 Z" fill="#cdbfa9"/>
+    <path d="M20 16 L74 16 L80 26 L90 104 Q91 116 79 116 L58 116 L62 26 Z" fill="#e9dfcf"/>
+    <path d="M70 16 L100 6 L82 30 Z" fill="#e9dfcf"/>
+    <rect x="18" y="12" width="60" height="6" rx="3" fill="#f3ebde"/>
+    <circle id="spout" cx="99" cy="8" r=".5" fill="none"/>
+  </g>
+  <g mask="url(#mText)"><g>
+    <path id="rGlow2" fill="#c08552" fill-opacity=".05"/>
+    <path id="rGlow1" fill="#c08552" fill-opacity=".08"/>
+    <path id="rBank" fill="#6b4329"/>
+    <path id="rBankHi" fill="#a8703f"/>
+    <path id="rWater" fill="#dccdb6"/>
+    <path id="rMid" fill="#efe6d7"/>
+    <path id="rShine" fill="#fffdf8" fill-opacity=".9"/>
+    <path id="rS1" fill="none" stroke="#ffffff" stroke-opacity=".6" stroke-width="1.2" stroke-linecap="round" stroke-dasharray="16 52"/>
+    <path id="rS2" fill="none" stroke="#ffffff" stroke-opacity=".45" stroke-width="1" stroke-linecap="round" stroke-dasharray="8 74"/>
+    <path id="rS3" fill="none" stroke="#c9b496" stroke-opacity=".55" stroke-width="1" stroke-linecap="round" stroke-dasharray="24 68"/>
+  </g></g>`;
+document.body.appendChild(milk);
+const q = id => milk.querySelector('#' + id);
+const jug = q('jug'), spout = q('spout'), mClipRect = q('mClipRect'), mFade = q('mFade'), mMaskBg = q('mMaskBg'), mHoles = q('mHoles'), mHolesLive = q('mHolesLive');
+const R = { g2:q('rGlow2'), g1:q('rGlow1'), bank:q('rBank'), bankHi:q('rBankHi'), water:q('rWater'), mid:q('rMid'), shine:q('rShine'), s1:q('rS1'), s2:q('rS2'), s3:q('rS3') };
+const heart = $('#heart'), cupTarget = $('#cupTarget');
+let mY0 = 0, mY1 = 0, mEndY = 0, mBuilt = false, flow = 0, mMobile = false;
+const mStep = 6;
+const H_ALL = () => document.documentElement.scrollHeight;
+const docY = el => el.getBoundingClientRect().top + scrollY;
+const smooth = t => { t = Math.min(1, Math.max(0, t)); return t*t*(3 - 2*t); };
+
+// text knock-outs, so the river always reads as running under the words
+const HOLE_SEL = 'main h1, main h2, main h3, main p, main li, main .label, main .btn, main summary, main .fact span, main .dchip, main .kit-btn small, main .legend span, main .dmeta span, main .scroll-cue, main .step .n, main .where span, main .where b, main .da, main .tip';
+const LIVE_SEL = '.hs-pin > .wrap .label, .hs-pin > .wrap h2, .hs-count';
+function rectsFor(el){
+  if (el.matches('.btn, .dchip')) return [el.getBoundingClientRect()];
+  const r = document.createRange(); r.selectNodeContents(el);
+  return [...r.getClientRects()];
+}
+function holeRect(r, sy, pad){
+  return `<rect x="${(r.left - pad).toFixed(1)}" y="${(r.top + sy - pad).toFixed(1)}" width="${(r.width + pad*2).toFixed(1)}" height="${(r.height + pad*2).toFixed(1)}" rx="${pad}" fill="#000" fill-opacity=".55"/>` +
+         `<rect x="${(r.left - pad*.35).toFixed(1)}" y="${(r.top + sy - pad*.5).toFixed(1)}" width="${(r.width + pad*.7).toFixed(1)}" height="${(r.height + pad).toFixed(1)}" rx="${pad*.5}" fill="#000"/>`;
+}
+function buildHoles(){
+  // measure revealed positions, without the reveal offset
+  const rv = [...document.querySelectorAll('.rv:not(.in)')];
+  rv.forEach(el => { el.style.transition = 'none'; el.style.transform = 'none'; });
+  const sy = scrollY, out = [];
+  document.querySelectorAll(HOLE_SEL).forEach(el => {
+    if (el.closest('.hs-pin') || el.closest('.dcard') || el.closest('#cup')) return;
+    const ki = el.closest('.kit-item'); if (ki && !ki.classList.contains('open') && el.closest('.kit-body')) return;
+    for (const r of rectsFor(el)) if (r.width > 1 && r.height > 1) out.push(holeRect(r, sy, 12));
+  });
+  rv.forEach(el => { el.style.transform = ''; });
+  void document.body.offsetHeight;
+  rv.forEach(el => { el.style.transition = ''; });
+  mHoles.innerHTML = out.join('');
+}
+const liveEls = [...document.querySelectorAll(LIVE_SEL)];
+let liveCache = '';
+function updateLiveHoles(){
+  const sy = scrollY; let h = '';
+  for (const el of liveEls) for (const r of rectsFor(el)) if (r.width > 1) h += holeRect(r, sy, 12);
+  if (h !== liveCache){ mHolesLive.innerHTML = h; liveCache = h; }
+}
+
+function ribbon(cs, hws, k, off = 0){
+  const L = [], Rr = [];
+  for (let i = 0; i < cs.length; i++){
+    const [x, y, nx, ny] = cs[i], hw = hws[i]*k;
+    const ox = nx*off*hws[i], oy = ny*off*hws[i];
+    L.push(`${(x + nx*hw + ox).toFixed(1)} ${(y + ny*hw + oy).toFixed(1)}`);
+    Rr.push(`${(x - nx*hw + ox).toFixed(1)} ${(y - ny*hw + oy).toFixed(1)}`);
+  }
+  return 'M' + L.join(' L') + ' L' + Rr.reverse().join(' L') + ' Z';
+}
+function line(cs, hws, k, dy = 0){
+  return 'M' + cs.map(([x, y, nx, ny], i) => `${(x + nx*hws[i]*k).toFixed(1)} ${(y + ny*hws[i]*k + dy).toFixed(1)}`).join(' L');
+}
+function buildMilk(){
+  const W = document.documentElement.clientWidth;
+  milk.style.height = '0px';
+  const H = document.documentElement.scrollHeight;
+  milk.setAttribute('width', W); milk.setAttribute('height', H); milk.style.height = H + 'px';
+  mClipRect.setAttribute('width', W);
+  mMaskBg.setAttribute('width', W); mFade.setAttribute('width', W);
+  const mobile = mMobile = W < 760;
+  const g = Math.max(20, (W - 1240)/2 + 20);
+  const sc = mobile ? .72 : 1.15;
+  jug.setAttribute('transform', `translate(0 0) scale(${sc}) rotate(36 50 60)`);
+  const pt = milk.createSVGPoint(); pt.x = 99; pt.y = 8;
+  const t0 = pt.matrixTransform(spout.getCTM());
+  const tipX = W - Math.max(14, g*.6);
+  jug.setAttribute('transform', `translate(${tipX - t0.x} ${docY($('.hero')) + (mobile ? 120 : 170) - t0.y}) scale(${sc}) rotate(36 50 60)`);
+  const tip = pt.matrixTransform(spout.getCTM());
+  const cr = cupTarget.getBoundingClientRect();
+  const cx = cr.left + cr.width/2, cy = cr.top + scrollY + cr.height/2;
+  mY0 = tip.y; mY1 = cy; mEndY = cy;
+  const mid = W/2, amp = W/2 - Math.max(30, g*.5);
+  const L1 = mobile ? 1100 : 1700, L2 = mobile ? 520 : 760;
+  const meander = y => {
+    const d = y - mY0;
+    const m = .72*Math.sin(d*2*Math.PI/L1 + 1.15) + .28*Math.sin(d*2*Math.PI/L2 + .4);
+    return mid + amp*Math.max(-1, Math.min(1, m));
+  };
+  const startBlend = mobile ? 200 : 320, endBlend = mobile ? 380 : 560, endStraight = 110;
+  const xs = [];
+  for (let y = mY0; y <= mY1 + .1; y += mStep){
+    let x = meander(y);
+    x = tipX + (x - tipX)*smooth((y - mY0)/startBlend);
+    x = cx + (x - cx)*smooth((mY1 - y - endStraight)/endBlend);
+    xs.push(x);
+  }
+  const n = xs.length, cs = [], hws = [];
+  const base = mobile ? 3.2 : 7, vary = mobile ? 4 : 9;
+  for (let i = 0; i < n; i++){
+    const y = mY0 + i*mStep, x = xs[i];
+    let tx = xs[Math.min(n-1, i+1)] - xs[Math.max(0, i-1)], ty = 2*mStep; const len = Math.hypot(tx, ty) || 1; tx /= len; ty /= len;
+    cs.push([x, y, -ty, tx]);
+    const river = base + vary*(.5 + .5*Math.sin((y - mY0)/640 + .8));
+    const grow = smooth((y - mY0)/(mobile ? 260 : 380)), shrink = smooth((mY1 - y)/(mobile ? 260 : 380));
+    hws.push(Math.max(1, 1.2 + (river - 1.2)*Math.min(grow, shrink)));
+  }
+  R.g2.setAttribute('d', ribbon(cs, hws, 3.4));
+  R.g1.setAttribute('d', ribbon(cs, hws, 2.1));
+  R.bank.setAttribute('d', ribbon(cs, hws, 1.45, .18));
+  R.bankHi.setAttribute('d', ribbon(cs, hws, 1.18, -.08));
+  R.water.setAttribute('d', ribbon(cs, hws, 1));
+  R.mid.setAttribute('d', ribbon(cs, hws, .66, -.08));
+  R.shine.setAttribute('d', ribbon(cs, hws, .2, -.28));
+  R.s1.setAttribute('d', line(cs, hws, -.45));
+  R.s2.setAttribute('d', line(cs, hws, .15));
+  R.s3.setAttribute('d', line(cs, hws, .55));
+  buildHoles();
+  mBuilt = true;
+}
+function updateMilk(dt){
+  if (!mBuilt) return;
+  const maxY = document.documentElement.scrollHeight - innerHeight;
+  const target = reduce || scrollY >= maxY - 2 ? mY1 + 50 : scrollY + innerHeight*.62;
+  const yT = Math.min(mY1, Math.max(mY0, target));
+  const done = yT >= mY1;
+  const front = done ? H_ALL() : yT + 30;
+  mMaskBg.setAttribute('height', Math.max(0, front - 90).toFixed(1));
+  mFade.setAttribute('y', Math.max(0, front - 90).toFixed(1));
+  mFade.style.display = done ? 'none' : '';
+  updateLiveHoles();
+  if (!reduce){
+    flow -= dt*(mMobile ? .03 : .045);
+    R.s1.style.strokeDashoffset = flow.toFixed(1);
+    R.s2.style.strokeDashoffset = (flow*1.35).toFixed(1);
+    R.s3.style.strokeDashoffset = (flow*.8).toFixed(1);
+  }
+  const hp = smooth((target - mEndY)/170);
+  heart.setAttribute('transform', `translate(160 88) scale(1 .42) scale(${(hp*1.02).toFixed(3)})`);
+}
+let mT = null;
+const rebuild = () => { clearTimeout(mT); mT = setTimeout(() => { buildMilk(); updateMilk(0); }, 140); };
+if ('ResizeObserver' in window) new ResizeObserver(rebuild).observe(document.querySelector('main'));
+setTimeout(rebuild, 1700);
+
+/* ---------- loop ---------- */
+let lastT = 0;
+function frame(t){
+  const fdt = lastT ? Math.min(50, t - lastT) : 16; lastT = t;
+  if (lenis) lenis.raf(t);
+  const y = scrollY;
+  vel = vel*.9 + Math.abs(y - lastY)*.1; lastY = y;
+  drawSteam(t);
+  updateMani(); updateHS(); updateHeader(y); updateMilk(fdt);
+  if (!reduce){
+    mqX -= .6 + vel*.35;
+    const half = marq.scrollWidth/2;
+    if (-mqX >= half) mqX += half;
+    marq.style.transform = `translate3d(${mqX}px,0,0)`;
+    if (fine){ cx += (tx - cx)*.18; cy += (ty - cy)*.18; cur.style.transform = `translate3d(${cx}px,${cy}px,0)`; }
+  }
+  requestAnimationFrame(frame);
+}
+
+addEventListener('resize', () => { sizeSteam(); sizeHS(); lenis?.resize?.(); rebuild(); });
+sizeSteam(); renderDrink(false); sizeHS(); updateMani(); buildMilk(); updateMilk(0);
+requestAnimationFrame(frame);
+document.fonts?.ready?.then(() => { sizeHS(); lenis?.resize?.(); rebuild(); });
+})();
+</script>
+
+</body></html>
